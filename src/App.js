@@ -78,7 +78,7 @@ class App extends Component {
           result: result,
           bet: bet,
           target: this.state.target,
-          winnings: `$${(bet * this.state.multiplier).toFixed(2)}`,
+          winnings: `$${parseFloat((bet * this.state.multiplier)).toFixed(2)}`,
           timestamp: timestamp,
           seed: this.state.seed,
           nonce: random
@@ -96,7 +96,7 @@ class App extends Component {
           result: result,
           bet: bet,
           target: this.state.target,
-          winnings: `-$${bet.toFixed(2)}`,
+          winnings: `-$${parseFloat(bet).toFixed(2)}`,
           timestamp: timestamp,
           seed: this.state.seed,
           nonce: random
@@ -231,14 +231,14 @@ class App extends Component {
                       </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                  <Table.Cell>${bet.bet.toFixed(2)}</Table.Cell>
+                  <Table.Cell>${parseFloat(bet.bet).toFixed(2)}</Table.Cell>
                   <Table.Cell>{bet.target}</Table.Cell>
                   <Table.Cell positive={bet.result < bet.target} negative={bet.result >= bet.target}>{bet.result}</Table.Cell>
                   <Table.Cell positive={bet.result < bet.target} negative={bet.result >= bet.target}>{bet.winnings}</Table.Cell>
                   <Table.Cell>
                     <Modal trigger={<Button>verify</Button>} closeIcon>
                       <Header icon='heart' content='Provably-Fair Verification' />
-                      <Modal.Content>
+                      <Modal.Content scrolling>
                         <Header as='h3'>Seed</Header>
                         <Segment compact inverted>{bet.seed}</Segment>
                         <Header as='h3'>Timestamp</Header>
