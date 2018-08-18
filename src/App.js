@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Container, Icon, Label, Input, Button, Header, Form, Message, Statistic, Table} from 'semantic-ui-react';
+import {Container, Icon, Label, Input, Button, Header, Form, Message, Statistic, Table, Modal, Segment} from 'semantic-ui-react';
 
 var crypto = require('crypto');
 
@@ -50,8 +50,11 @@ class App extends Component {
       var bet = this.state.bet;
       var balance = this.state.balance - bet;
 
+      var timestamp = Date.now();
+      var random = Math.random();
+
       //first hash seed + current time + math.random
-      var resultHash = crypto.createHash('sha256').update(this.state.seed + '_' + Date.now() + '_' + Math.random()).digest('hex');
+      var resultHash = crypto.createHash('sha256').update(this.state.seed + '_' + timestamp + '_' + random).digest('hex');
 
       //take first 10 bits of result hash
       resultHash = resultHash.substring(0,10);
@@ -75,7 +78,10 @@ class App extends Component {
           result: result,
           bet: bet,
           target: this.state.target,
-          winnings: `$${(bet * this.state.multiplier).toFixed(2)}`
+          winnings: `$${(bet * this.state.multiplier).toFixed(2)}`,
+          timestamp: timestamp,
+          seed: this.state.seed,
+          nonce: random
         });
       } else {
         //loss
@@ -90,7 +96,10 @@ class App extends Component {
           result: result,
           bet: bet,
           target: this.state.target,
-          winnings: `-$${bet.toFixed(2)}`
+          winnings: `-$${bet.toFixed(2)}`,
+          timestamp: timestamp,
+          seed: this.state.seed,
+          nonce: random
         });
       }
     }
@@ -226,7 +235,29 @@ class App extends Component {
                   <Table.Cell>{bet.target}</Table.Cell>
                   <Table.Cell positive={bet.result < bet.target} negative={bet.result >= bet.target}>{bet.result}</Table.Cell>
                   <Table.Cell positive={bet.result < bet.target} negative={bet.result >= bet.target}>{bet.winnings}</Table.Cell>
-                  <Table.Cell><Button>verify</Button></Table.Cell>
+                  <Table.Cell>
+                    <Modal trigger={<Button>verify</Button>} closeIcon>
+                      <Header icon='heart' content='Provably-Fair Verification' />
+                      <Modal.Content>
+                        <Header as='h3'>Seed</Header>
+                        <Segment compact inverted>{bet.seed}</Segment>
+                        <Header as='h3'>Timestamp</Header>
+                        <Segment compact inverted>{bet.timestamp}</Segment>
+                        <Header as='h3'>Nonce</Header>
+                        <Segment compact inverted>{bet.nonce}</Segment>
+                        <Header as='h3'>Game seed</Header>
+                        <Segment compact inverted>{bet.seed + '_' + bet.timestamp + '_' + bet.nonce}</Segment>
+                        <Header as='h3'>Game hash (sha256)</Header>
+                        <Segment compact inverted>{crypto.createHash('sha256').update(bet.seed + '_' + bet.timestamp + '_' + bet.nonce).digest('hex')}</Segment>
+                        <Header as='h3'>Result hex (first 10 bytes of above hash)</Header>
+                        <Segment compact inverted>{crypto.createHash('sha256').update(bet.seed + '_' + bet.timestamp + '_' + bet.nonce).digest('hex').substring(0,10)}</Segment>
+                        <Header as='h3'>Above hex, parsed to int</Header>
+                        <Segment compact inverted>{parseInt(crypto.createHash('sha256').update(bet.seed + '_' + bet.timestamp + '_' + bet.nonce).digest('hex').substring(0,10),16)}</Segment>
+                        <Header as='h3'>Above int mod 10,001 (gives us random result between 0-10,000)</Header>
+                        <Segment compact inverted>{parseInt(crypto.createHash('sha256').update(bet.seed + '_' + bet.timestamp + '_' + bet.nonce).digest('hex').substring(0,10),16) % 10001}</Segment>
+                      </Modal.Content>
+                    </Modal>
+                  </Table.Cell>
                 </Table.Body>
                 </Table>
                 );
