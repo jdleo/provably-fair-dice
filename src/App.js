@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Container, Icon, Label, Input, Button, Header, Form, Message, Statistic} from 'semantic-ui-react';
+import {Container, Icon, Label, Input, Button, Header, Form, Message, Statistic, Table} from 'semantic-ui-react';
 
 var crypto = require('crypto');
 
@@ -69,7 +69,14 @@ class App extends Component {
           lastRoll: result,
           lastTarget: this.state.target,
           balance: balance + (bet * this.state.multiplier)
-        })
+        });
+
+        this.state.betHistory.push({
+          result: result,
+          bet: bet,
+          target: this.state.target,
+          winnings: `$${(bet * this.state.multiplier).toFixed(2)}`
+        });
       } else {
         //loss
         this.setState({
@@ -77,7 +84,14 @@ class App extends Component {
           lastRoll: result,
           lastTarget: this.state.target,
           balance: balance
-        })
+        });
+
+        this.state.betHistory.push({
+          result: result,
+          bet: bet,
+          target: this.state.target,
+          winnings: `-$${bet.toFixed(2)}`
+        });
       }
     }
   }
@@ -94,7 +108,8 @@ class App extends Component {
       errorMessage: '',
       lastRoll: '∞',
       lastTarget: '∞',
-      resultColor: 'grey'
+      resultColor: 'grey',
+      betHistory: []
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -193,6 +208,32 @@ class App extends Component {
         </Button>
         <br/>
         <br/><br/>
+        <Header as='h2'>History</Header>
+        {this.state.betHistory.reverse().map(function(bet, index){
+                return (
+                  <Table celled>
+                    <Table.Header>
+                      <Table.Row>
+                        <Table.HeaderCell>Amount</Table.HeaderCell>
+                        <Table.HeaderCell>Under Target</Table.HeaderCell>
+                        <Table.HeaderCell>Roll</Table.HeaderCell>
+                        <Table.HeaderCell>Winnings</Table.HeaderCell>
+                        <Table.HeaderCell>Provably-fair</Table.HeaderCell>
+                      </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                  <Table.Cell>${bet.bet.toFixed(2)}</Table.Cell>
+                  <Table.Cell>{bet.target}</Table.Cell>
+                  <Table.Cell positive={bet.result < bet.target} negative={bet.result >= bet.target}>{bet.result}</Table.Cell>
+                  <Table.Cell positive={bet.result < bet.target} negative={bet.result >= bet.target}>{bet.winnings}</Table.Cell>
+                  <Table.Cell><Button>verify</Button></Table.Cell>
+                </Table.Body>
+                </Table>
+                );
+              })
+            }
+
+
         <br/>
         <br/><br/>
         </Container>
