@@ -54,7 +54,7 @@ class App extends Component {
       var resultHash = crypto.createHash('sha256').update(this.state.seed + '_' + Date.now() + '_' + Math.random()).digest('hex');
 
       //take first 8 bits of result hash
-      resultHash = resultHash.substring(0,8);
+      resultHash = resultHash.substring(0,10);
 
       //convert 8 hex bits to decimal
       var result = parseInt(resultHash, 16);
