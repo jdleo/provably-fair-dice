@@ -16,11 +16,11 @@ class App extends Component {
   updateMultiplier(event) {
 
     var pct = 100 / event.target.value;
-    var odds = (pct - 0.55).toFixed(2);
+    var odds = (pct - pct*0.01);
 
     this.setState({
       multiplier: event.target.value,
-      target: ((odds / 100) * 10000).toFixed(0)
+      target: ((odds / 100) * 10000)
     });
   }
 
@@ -53,10 +53,10 @@ class App extends Component {
       //first hash seed + current time + math.random
       var resultHash = crypto.createHash('sha256').update(this.state.seed + '_' + Date.now() + '_' + Math.random()).digest('hex');
 
-      //take first 8 bits of result hash
+      //take first 10 bits of result hash
       resultHash = resultHash.substring(0,10);
 
-      //convert 8 hex bits to decimal
+      //convert 10 hex bits to decimal
       var result = parseInt(resultHash, 16);
 
       //take decimal mod 10,001
@@ -88,7 +88,7 @@ class App extends Component {
     this.state = {
       balance: 1000.00,
       multiplier: 2.00,
-      target: 4945,
+      target: 4950,
       bet: 1,
       seed: currentTimeHash,
       errorMessage: '',
