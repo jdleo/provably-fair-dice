@@ -1,6 +1,9 @@
 # Provably-fair dice game
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).  
 
+## demo  
+https://dice-demo.herokuapp.com  
+
 ## dev  
 ```npm run start```  
 
