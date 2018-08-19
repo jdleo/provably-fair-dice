@@ -83,6 +83,11 @@ class App extends Component {
           seed: this.state.seed,
           nonce: random
         });
+
+        //clean up array after 20 bets (to preserve memory)
+        if (this.state.betHistory.length > 20) {
+          this.setState({betHistory: this.state.betHistory.slice(1)})
+        }
       } else {
         //loss
         this.setState({
@@ -101,6 +106,11 @@ class App extends Component {
           seed: this.state.seed,
           nonce: random
         });
+
+        //clean up array after 20 bets (to preserve memory)
+        if (this.state.betHistory.length > 20) {
+          this.setState({betHistory: this.state.betHistory.slice(1)})
+        }
       }
     }
   }
