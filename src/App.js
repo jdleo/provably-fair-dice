@@ -51,10 +51,10 @@ class App extends Component {
       var balance = this.state.balance - bet;
 
       var timestamp = Date.now();
-      var random = Math.random();
+      var nonce = (Math.random() * 100000).toFixed(0);
 
       //first hash seed + current time + math.random
-      var resultHash = crypto.createHash('sha256').update(this.state.seed + '_' + timestamp + '_' + random).digest('hex');
+      var resultHash = crypto.createHash('sha256').update(this.state.seed + '_' + timestamp + '_' + nonce).digest('hex');
 
       //take first 10 bits of result hash
       resultHash = resultHash.substring(0,10);
@@ -81,7 +81,7 @@ class App extends Component {
           winnings: `$${parseFloat((bet * this.state.multiplier)).toFixed(2)}`,
           timestamp: timestamp,
           seed: this.state.seed,
-          nonce: random
+          nonce: nonce
         });
 
         //clean up array after 20 bets (to preserve memory)
@@ -104,7 +104,7 @@ class App extends Component {
           winnings: `-$${parseFloat(bet).toFixed(2)}`,
           timestamp: timestamp,
           seed: this.state.seed,
-          nonce: random
+          nonce: nonce
         });
 
         //clean up array after 20 bets (to preserve memory)
