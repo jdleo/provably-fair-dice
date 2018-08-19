@@ -241,11 +241,12 @@ class App extends Component {
                       </Table.Row>
                     </Table.Header>
                     <Table.Body>
-                  <Table.Cell>${parseFloat(bet.bet).toFixed(2)}</Table.Cell>
-                  <Table.Cell>{bet.target}</Table.Cell>
-                  <Table.Cell positive={bet.result < bet.target} negative={bet.result >= bet.target}>{bet.result}</Table.Cell>
-                  <Table.Cell positive={bet.result < bet.target} negative={bet.result >= bet.target}>{bet.winnings}</Table.Cell>
-                  <Table.Cell>
+                    <Table.Row positive={bet.result < bet.target} negative={bet.result >= bet.target}>
+                      <Table.Cell>${parseFloat(bet.bet).toFixed(2)}</Table.Cell>
+                      <Table.Cell>{bet.target}</Table.Cell>
+                      <Table.Cell >{bet.result}</Table.Cell>
+                      <Table.Cell>{bet.winnings}</Table.Cell>
+                      <Table.Cell>
                     <Modal trigger={<Button>verify</Button>} closeIcon>
                       <Header icon='heart' content='Provably-Fair Verification' />
                       <Modal.Content scrolling>
@@ -268,6 +269,7 @@ class App extends Component {
                       </Modal.Content>
                     </Modal>
                   </Table.Cell>
+                  </Table.Row>
                 </Table.Body>
                 </Table>
                 );
