@@ -86,7 +86,7 @@ class App extends Component {
 
         //clean up array after 20 bets (to preserve memory)
         if (this.state.betHistory.length > 20) {
-          this.setState({betHistory: this.state.betHistory.slice(1)})
+          this.setState({betHistory: this.state.betHistory.slice(1)});
         }
       } else {
         //loss
@@ -109,7 +109,7 @@ class App extends Component {
 
         //clean up array after 20 bets (to preserve memory)
         if (this.state.betHistory.length > 20) {
-          this.setState({betHistory: this.state.betHistory.slice(1)})
+          this.setState({betHistory: this.state.betHistory.slice(1)});
         }
       }
     }
@@ -228,7 +228,7 @@ class App extends Component {
         <br/>
         <br/><br/>
         <Header as='h2'>History</Header>
-        {this.state.betHistory.reverse().map(function(bet, index){
+        {this.state.betHistory.slice(0).reverse().map(function(bet, index){
                 return (
                   <Table celled>
                     <Table.Header>
