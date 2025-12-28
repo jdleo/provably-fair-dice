@@ -68,8 +68,8 @@ The player must roll under `4950` (out of `10001`) to win, which gives a 49.5% c
 
 If you were to build a real provably fair system, you would need to implement:
 
-- [ ] **Crypto Deposits**: Integrate with a blockchain (e.g., Ethereum, Solana) for deposit addresses and confirmation monitoring.
+- [ ] **Crypto Deposits**: Integrate with a blockchain (e.g., Bitcoin, Ethereum, Solana) for deposit addresses and confirmation monitoring.
 - [ ] **Server Seed Hash Chaining**: Pre-generate a chain of server seeds and reveal only the hash upfront. Each bet reveals the previous seed.
 - [ ] **Seed Rotation on Reveal**: When a client requests to reveal their server seed, rotate to a new one and require them to set a new client seed.
 - [ ] **Ledger Based on Crypto Confirmation**: Only credit bets after a configurable number of blockchain confirmations.
-- [ ] **Payouts & Batching**: Implement withdrawal queues with batched transactions to reduce gas fees.
+- [ ] **Payouts & Batching**: Implement withdrawal queues with batched transactions to reduce fees.
