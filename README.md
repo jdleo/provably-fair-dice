@@ -1,21 +1,35 @@
-# Provably-fair dice game
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).  
+# Provably Fair Dice (Next.js Edition)
 
-## demo  
-https://dice-demo.herokuapp.com  
+A modern, provably fair dice game demo built with **Next.js**, **Tailwind CSS**, and **TypeScript**.
 
-## dev  
-```npm run start```  
+## Features
+- **Provably Fair**: Verify every roll with client seeds and server hashes.
+- **Modern UI**: Clean, responsive design using Tailwind CSS.
+- **Fast**: Built on Next.js App Router.
 
-## prod  
-```npm run build```  
+## Getting Started
 
-## tests
-```npm run test```  
+1. **Install Dependencies**
+   ```bash
+   pnpm install
+   ```
 
-## provably-fair  
-1. concatenate: `user seed + '_' + current unix time + '_' + Math.random();`  
-2. take that concatenation, hash with sha256  
-3. take hash, and get first 10 hex characters (40 bits)  
-4. convert that hex string to decimal  
-5. decimal mod 10,001 for game result
+2. **Run Development Server**
+   ```bash
+   pnpm dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000).
+
+3. **Build for Production**
+   ```bash
+   pnpm build
+   pnpm start
+   ```
+
+## Verification
+The game uses the following logic to generate results:
+1. `seedString = clientSeed + '_' + timestamp + '_' + nonce`
+2. `hash = SHA256(seedString)`
+3. `result = parseInt(hash.substring(0, 10), 16) % 10001`
+
+You can verify this manually or using the in-game verification modal.
