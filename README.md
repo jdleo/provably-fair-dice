@@ -6,6 +6,8 @@ A modern, provably fair dice game demo built with **Next.js**, **Tailwind CSS**,
 
 Demo: [https://provably-fair-dice.vercel.app/](https://provably-fair-dice.vercel.app/)
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjdleo%2Fprovably-fair-dice)
+
 ## Features
 - **Provably Fair**: Verify every roll with client seeds and server hashes.
 - **Modern UI**: Clean, responsive design using Tailwind CSS.
